@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class MappingChallengeTest {
 
   private static void indexTestDocuments() throws IOException {
     searchFacade.index(createEmail1());
+    searchFacade.index(createEmail2());
     getClient().admin().indices().refresh(new RefreshRequest(Names.INDEX)).actionGet();
   }
 
@@ -75,6 +77,17 @@ public class MappingChallengeTest {
     String text =
         "Ich habe ein paar interessante Bücher gefunden: \"Eventual Consistent Resilience\" und \"Don't Search - Find!\". Schaut doch mal rein.";
     List<String> labels = Arrays.asList("Important", "Elasticsearch");
+    return new Email(id, sender, recipients, timestamp, subject, text, labels);
+  }
+
+  private static Email createEmail2() {
+    String id = "2";
+    String sender = "patrick.peschlow@codecentric.de";
+    List<String> recipients = Arrays.asList("patrick.peschlow@codecentric.de");
+    Date timestamp = new DateTime().withYear(2014).withMonthOfYear(4).withDayOfMonth(10).toDate();
+    String subject = "Reminder";
+    String text = "Hangout um 15 Uhr!";
+    List<String> labels = Collections.emptyList();
     return new Email(id, sender, recipients, timestamp, subject, text, labels);
   }
 
@@ -124,7 +137,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
@@ -133,7 +146,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
@@ -142,7 +155,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
@@ -151,7 +164,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
@@ -225,7 +238,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
@@ -236,7 +249,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
@@ -270,7 +283,7 @@ public class MappingChallengeTest {
 
     EmailSearchResult result = searchFacade.search(query);
 
-    verifyMatches(result, "1");
+    verifyMatches(result, "1", "2");
   }
 
   @Test
