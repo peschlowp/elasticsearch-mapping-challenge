@@ -45,8 +45,13 @@ public class EmailSearchQuery {
    */
   private final List<String> labels;
 
+  /**
+   * Match on a predefined, named query.
+   */
+  private final NamedQuery named;
+
   public EmailSearchQuery(String id, String sender, String recipient, Date fromTimestamp, Date toTimestamp,
-      String subject, String text, List<String> labels) {
+      String subject, String text, List<String> labels, NamedQuery named) {
     this.id = id;
     this.sender = sender;
     this.recipient = recipient;
@@ -55,6 +60,7 @@ public class EmailSearchQuery {
     this.subject = subject;
     this.text = text;
     this.labels = labels;
+    this.named = named;
   }
 
   public String getId() {
@@ -89,10 +95,14 @@ public class EmailSearchQuery {
     return labels;
   }
 
+  public NamedQuery getNamed() {
+    return named;
+  }
+
   @Override
   public String toString() {
     return "EmailSearchQuery [id=" + id + ", sender=" + sender + ", recipient=" + recipient + ", fromTimestamp="
         + fromTimestamp + ", toTimestamp=" + toTimestamp + ", subject=" + subject + ", text=" + text + ", labels="
-        + labels + "]";
+        + labels + ", named=" + named + "]";
   }
 }

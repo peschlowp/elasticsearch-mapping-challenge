@@ -17,9 +17,10 @@ public class EmailSearchQueryBuilder {
   private String subject;
   private String text;
   private List<String> labels;
+  private NamedQuery named;
 
   public EmailSearchQuery build() {
-    return new EmailSearchQuery(id, sender, recipient, fromTimestamp, toTimestamp, subject, text, labels);
+    return new EmailSearchQuery(id, sender, recipient, fromTimestamp, toTimestamp, subject, text, labels, named);
   }
 
   public EmailSearchQueryBuilder id(String id) {
@@ -62,10 +63,15 @@ public class EmailSearchQueryBuilder {
     return this;
   }
 
+  public EmailSearchQueryBuilder named(NamedQuery named) {
+    this.named = named;
+    return this;
+  }
+
   @Override
   public String toString() {
     return "EmailSearchQueryBuilder [id=" + id + ", sender=" + sender + ", recipient=" + recipient + ", fromTimestamp="
         + fromTimestamp + ", toTimestamp=" + toTimestamp + ", subject=" + subject + ", text=" + text + ", labels="
-        + labels + "]";
+        + labels + ", named=" + named + "]";
   }
 }
