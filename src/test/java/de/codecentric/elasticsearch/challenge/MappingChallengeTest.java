@@ -413,4 +413,13 @@ public class MappingChallengeTest {
 
     verifyNoMatches(result);
   }
+
+  @Test
+  public void shouldMatchIfRecipientsContainSender() {
+    EmailSearchQuery query = EmailSearchQueryBuilder.start().named(NamedQuery.RECIPIENTS_CONTAIN_SENDER).build();
+
+    EmailSearchResult result = searchFacade.search(query);
+
+    verifyMatches(result, "2");
+  }
 }
