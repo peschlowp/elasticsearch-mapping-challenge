@@ -13,6 +13,8 @@ import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.joda.time.DateTime;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -56,8 +58,19 @@ public class MappingChallengeTest {
 
   private static void createIndex() throws IOException {
     getClient().admin().indices().create(new CreateIndexRequest(Names.INDEX)).actionGet();
+    getClient().admin().indices().preparePutMapping(Names.INDEX).setType("_default_")
+        .setSource(defaultMappingWithDynamicMappingDisabled()).execute().actionGet();
     getClient().admin().indices().preparePutMapping(Names.INDEX).setType(Names.TYPE)
         .setSource(mappingDefinition.getMapping()).execute().actionGet();
+  }
+
+  private static XContentBuilder defaultMappingWithDynamicMappingDisabled() {
+    try {
+      return XContentFactory.jsonBuilder().startObject().startObject("_default_").field("dynamic", "false").endObject()
+          .endObject();
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   private static void indexTestDocuments() throws IOException {

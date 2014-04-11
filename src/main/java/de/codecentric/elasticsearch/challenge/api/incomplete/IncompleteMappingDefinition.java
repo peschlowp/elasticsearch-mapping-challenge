@@ -14,9 +14,8 @@ public class IncompleteMappingDefinition implements MappingDefinition {
   public XContentBuilder getMapping() {
     try {
       // Returns a dummy mapping.
-      return XContentFactory.jsonBuilder().startObject().startObject(Names.TYPE).field("dynamic", "false")
-          .startObject("properties").startObject("dummyfield").field("type", "string").endObject().endObject()
-          .endObject().endObject();
+      return XContentFactory.jsonBuilder().startObject().startObject(Names.TYPE).startObject("properties")
+          .startObject("dummyfield").field("type", "string").endObject().endObject().endObject().endObject();
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
