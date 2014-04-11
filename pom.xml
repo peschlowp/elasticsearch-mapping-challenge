@@ -37,6 +37,15 @@
 			<artifactId>elasticsearch</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+		<!-- If you have the Skywalker plugin in your local Maven repository and 
+			want to use it within the embedded test node, uncomment this dependency: -->
+		<!--
+		<dependency>
+			<groupId>org.xbib.elasticsearch.plugin</groupId>
+			<artifactId>elasticsearch-skywalker</artifactId>
+			<version>1.0.0.RC1.1</version>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -57,7 +66,7 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
