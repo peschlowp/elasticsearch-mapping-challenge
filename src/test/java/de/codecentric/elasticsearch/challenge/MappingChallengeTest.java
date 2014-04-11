@@ -9,10 +9,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.joda.time.DateTime;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.junit.BeforeClass;
@@ -57,7 +58,9 @@ public class MappingChallengeTest {
   }
 
   private static void createIndex() throws IOException {
-    getClient().admin().indices().create(new CreateIndexRequest(Names.INDEX)).actionGet();
+    Settings indexSettings =
+        ImmutableSettings.settingsBuilder().put("number_of_shards", 1).put("number_of_replicas", 0).build();
+    getClient().admin().indices().prepareCreate(Names.INDEX).setSettings(indexSettings).execute().actionGet();
     getClient().admin().indices().preparePutMapping(Names.INDEX).setType("_default_")
         .setSource(defaultMappingWithDynamicMappingDisabled()).execute().actionGet();
     getClient().admin().indices().preparePutMapping(Names.INDEX).setType(Names.TYPE)
