@@ -342,7 +342,7 @@ public class MappingChallengeTest {
   @Test
   public void shouldNotMatchOnlySomeLabels() {
     EmailSearchQuery query =
-        EmailSearchQueryBuilder.start().labels(Arrays.asList("Elasticsearch unknownLabel")).build();
+        EmailSearchQueryBuilder.start().labels(Arrays.asList("Elasticsearch", "unknownLabel")).build();
 
     EmailSearchResult result = searchFacade.search(query);
 
