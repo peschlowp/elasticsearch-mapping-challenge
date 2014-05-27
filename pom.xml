@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 		<!-- If you have the Skywalker plugin in your local Maven repository and 
 			want to use it within the embedded test node, uncomment this dependency: -->
